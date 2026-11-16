@@ -23,6 +23,7 @@ module.exports = {
 		'plugin:eslint-comments/recommended',
 	],
 	rules: {
+		'import/no-unresolved': ['error', { ignore: ['\\.svg\\?react$'] }],
 		semi: [2, 'always'],
 		quotes: [2, 'single', { avoidEscape: true }],
 		'no-unused-vars': 'off',
@@ -33,4 +34,16 @@ module.exports = {
 		'react/react-in-jsx-scope': 'off',
 		'@typescript-eslint/explicit-module-boundary-types': 'off',
 	},
+	overrides: [
+		{
+			files: ['vite.config.mjs'],
+			settings: {
+				'import/core-modules': [
+					'vite',
+					'@vitejs/plugin-react-swc',
+					'vite-plugin-svgr',
+				],
+			},
+		},
+	],
 };

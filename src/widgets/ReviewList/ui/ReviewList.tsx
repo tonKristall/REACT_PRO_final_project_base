@@ -1,12 +1,17 @@
+import { useState } from 'react';
 import classNames from 'classnames';
 import s from './ReviewList.module.css';
 import { Rating } from '../../../shared/ui/Rating';
-import { ReviewForm } from './ReviewForm/ReviewForm';
+import { ReviewForm } from '../../../features/reviews';
+import { Button } from '../../../shared/ui/Button';
+import { Modal } from '../../../shared/ui/Modal';
 
 type ReviewListProps = {
 	product: Product;
 };
 export const ReviewList = ({ product }: ReviewListProps) => {
+	const [isReviewOpen, setIsReviewOpen] = useState(false);
+
 	return (
 		<div className={classNames(s['product__reviews'])}>
 			{product.reviews.map((review) => (
@@ -22,8 +27,15 @@ export const ReviewList = ({ product }: ReviewListProps) => {
 				</div>
 			))}
 
-			<h2>Отзыв о товаре {product.name}</h2>
-			<ReviewForm />
+			<Button onClick={() => setIsReviewOpen(true)} size={'large'}>
+				Написать отзыв
+			</Button>
+			<Modal
+				isOpen={isReviewOpen}
+				onClose={() => setIsReviewOpen(false)}
+				title={`Отзыв о товаре ${product.name}`}>
+				<ReviewForm productId={product.id} />
+			</Modal>
 		</div>
 	);
 };

@@ -1,0 +1,17 @@
+.textarea {
+	display: block;
+	box-sizing: border-box;
+	width: 100%;
+	min-height: 100px;
+	margin: 8px 0;
+	padding: 7px 16px;
+	background: #ffffff;
+	border: 1px solid #cfd8dc;
+	border-radius: 12px;
+	resize: none;
+}
+
+.textarea:focus {
+	border-color: #ffe44d;
+	outline: none;
+}
