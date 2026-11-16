@@ -1,0 +1,9 @@
+.form {
+	align-items: flex-start;
+}
+
+.rating {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+}

@@ -1,11 +1,16 @@
-import { Card } from '../../../shared/ui/Card';
+import { memo } from 'react';
+import { Card } from './Card/Card';
 import s from './CardList.module.css';
 
 type CardListProps = {
 	title: string;
 	products: Product[];
 };
-export const CardList = ({ title, products }: CardListProps) => {
+
+export const CardList = memo(function CardList({
+	title,
+	products,
+}: CardListProps) {
 	if (!products.length) {
 		return <h1 className='header-title'>Товар не найден</h1>;
 	}
@@ -22,4 +27,4 @@ export const CardList = ({ title, products }: CardListProps) => {
 			</div>
 		</div>
 	);
-};
+});

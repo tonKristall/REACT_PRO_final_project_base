@@ -1,22 +1,26 @@
+import { useMemo } from 'react';
+import { useCatalogProducts, Search } from '../../../features/catalog';
 import classNames from 'classnames';
 import s from './Header.module.css';
 import { Logo } from '../../../shared/ui/Logo';
-import { Search } from '../../../shared/ui/Search/ui/Search';
 import { Link } from 'react-router-dom';
 import { useAppSelector } from '../../../shared/store/utils';
-import { userSelectors } from '../../../shared/store/slices/user';
+import { userSelectors } from '../../../entities/user';
 import { isLiked } from '../../../shared/utils';
-import { useProducts } from '../../../shared/store/hooks/useProducts';
-import { cartSelectors } from '../../../shared/store/slices/cart';
+import { cartSelectors } from '../../../entities/cart';
 
 export const Header = () => {
-	const { products } = useProducts();
+	const { products } = useCatalogProducts();
 	const user = useAppSelector(userSelectors.getUser);
-	const cartProducts = useAppSelector(cartSelectors.getCartProducts);
+	const userId = user?.id;
+	const cartProductsCount = useAppSelector(
+		(state) => cartSelectors.getCartProducts(state).length
+	);
 
-	const likeCount = products.filter((product) =>
-		isLiked(product.likes, user?.id)
-	).length;
+	const likeCount = useMemo(
+		() => products.filter((product) => isLiked(product.likes, userId)).length,
+		[products, userId]
+	);
 
 	const accessToken = useAppSelector(userSelectors.getAccessToken);
 
@@ -53,7 +57,7 @@ export const Header = () => {
 								fill='#1A1A1A'></path>
 						</svg>
 						<span className={s['header__icon-bubble']}>
-							{cartProducts.length}
+							{cartProductsCount}
 						</span>
 					</Link>
 					{accessToken && (
